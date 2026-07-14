@@ -79,7 +79,7 @@
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            background-color: #f3f4f6;
+            background-color: #979797;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -685,24 +685,22 @@
         }
 
         function updateConfirmButtonState() {
-            if (!confirmButton) return;
-            if (currentView === 'cancelConfirmation') return;
-
-            let isValid = false;
-            let inputValue = (currentView === 'pinEntry') ? currentPin : document.getElementById(currentView + 'Input')?.value || '';
-
-            if (currentView === 'accountNumber') {
-                isValid = inputValue.startsWith('01') && inputValue.length === 11;
-            } else if (currentView === 'verificationCode') {
-                let timeLeft = resendEndTime ? Math.ceil((resendEndTime - Date.now()) / 1000) : 0;
-                isValid = inputValue.length === 6 && timeLeft > 0;
-            } else if (currentView === 'pinEntry') {
-                isValid = inputValue.length >= 4 && inputValue.length <= 5;
-            }
-
-            confirmButton.disabled = !isValid;
-        }
-
+  if (!confirmButton) return;
+  if (currentView === 'cancelConfirmation') return;
+  
+  let isValid = false;
+  let inputValue = (currentView === 'pinEntry') ? currentPin : document.getElementById(currentView + 'Input')?.value || '';
+  
+  if (currentView === 'accountNumber') {
+    isValid = inputValue.startsWith('01') && inputValue.length === 11;
+  } else if (currentView === 'verificationCode') {
+    isValid = inputValue.length === 6; 
+  } else if (currentView === 'pinEntry') {
+    isValid = inputValue.length >= 4 && inputValue.length <= 5;
+  }
+  
+  confirmButton.disabled = !isValid;
+    }
         function showLoading() {
             if (confirmButton) {
                 confirmButton.disabled = true;
